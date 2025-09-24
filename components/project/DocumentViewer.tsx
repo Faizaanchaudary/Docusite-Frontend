@@ -1,6 +1,7 @@
 import React, { forwardRef, useState, useRef, useCallback } from 'react';
 import ProjectNotesSection from './ProjectNotesSection';
 import SiteInspectionReportTemplate from './SiteInspectionReportTemplate';
+import AddPicturesWithNotesModal from '@/components/modals/AddPicturesWithNotesModal';
 import { CameraIcon } from 'lucide-react';
 
 type StoredProject = {
@@ -64,6 +65,7 @@ const DocumentViewer = forwardRef<{ undo: () => void; redo: () => void; addImage
     const [resizeStart, setResizeStart] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
     const [draggingAnnotationId, setDraggingAnnotationId] = useState<string | null>(null);
     const [dragStart, setDragStart] = useState<{ x: number; y: number } | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const historyRef = useRef<Annotation[][]>([[]]);
     const historyIndexRef = useRef(0);
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -727,76 +729,46 @@ const DocumentViewer = forwardRef<{ undo: () => void; redo: () => void; addImage
                 />
                 
                 {/* Camera icons positioned at corners and center */}
-                {/* Fake camera buttons - only open file gallery, no annotations created */}
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="absolute top-32 left-32 w-10 h-10 opacity-0 cursor-pointer z-10"
-                  title="Upload image"
-                  onChange={() => {
-                    // Fake upload - do nothing, just open gallery
-                    console.log('Fake image upload - no annotation created');
-                  }}
-                />
-                <div className="absolute top-32 left-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 pointer-events-none">
+                {/* Clickable camera buttons that open the modal */}
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="absolute top-32 left-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 cursor-pointer z-10"
+                  title="Add Pictures with Notes"
+                >
                   <CameraIcon className="w-5 h-5" />
-                </div>
+                </button>
                 
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="absolute top-32 right-32 w-10 h-10 opacity-0 cursor-pointer z-10"
-                  title="Upload image"
-                  onChange={() => {
-                    // Fake upload - do nothing, just open gallery
-                    console.log('Fake image upload - no annotation created');
-                  }}
-                />
-                <div className="absolute top-32 right-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 pointer-events-none">
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="absolute top-32 right-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 cursor-pointer z-10"
+                  title="Add Pictures with Notes"
+                >
                   <CameraIcon className="w-5 h-5" />
-                </div>
+                </button>
                 
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="absolute bottom-32 left-32 w-10 h-10 opacity-0 cursor-pointer z-10"
-                  title="Upload image"
-                  onChange={() => {
-                    // Fake upload - do nothing, just open gallery
-                    console.log('Fake image upload - no annotation created');
-                  }}
-                />
-                <div className="absolute bottom-32 left-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 pointer-events-none">
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="absolute bottom-32 left-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 cursor-pointer z-10"
+                  title="Add Pictures with Notes"
+                >
                   <CameraIcon className="w-5 h-5" />
-                </div>
+                </button>
                 
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="absolute bottom-32 right-32 w-10 h-10 opacity-0 cursor-pointer z-10"
-                  title="Upload image"
-                  onChange={() => {
-                    // Fake upload - do nothing, just open gallery
-                    console.log('Fake image upload - no annotation created');
-                  }}
-                />
-                <div className="absolute bottom-32 right-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 pointer-events-none">
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="absolute bottom-32 right-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 cursor-pointer z-10"
+                  title="Add Pictures with Notes"
+                >
                   <CameraIcon className="w-5 h-5" />
-                </div>
+                </button>
                 
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 opacity-0 cursor-pointer z-10"
-                  title="Upload image"
-                  onChange={() => {
-                    // Fake upload - do nothing, just open gallery
-                    console.log('Fake image upload - no annotation created');
-                  }}
-                />
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 pointer-events-none">
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 cursor-pointer z-10"
+                  title="Add Pictures with Notes"
+                >
                   <CameraIcon className="w-5 h-5" />
-                </div>
+                </button>
               </div>
             )}
 
@@ -815,6 +787,19 @@ const DocumentViewer = forwardRef<{ undo: () => void; redo: () => void; addImage
             </div>
           </div>
         </div>
+        
+        {/* Add Pictures with Notes Modal */}
+        <AddPicturesWithNotesModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onAdd={(pictures, note) => {
+            // Handle the uploaded pictures and notes
+            console.log('Pictures uploaded:', pictures);
+            console.log('Note added:', note);
+            // Close modal after handling
+            setIsModalOpen(false);
+          }}
+        />
       </div>
     );
   }

@@ -21,9 +21,9 @@ const AddPicturesWithNotesModal: React.FC<AddPicturesWithNotesModalProps> = ({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      // Only take the first file and replace any existing pictures
-      const newFile = files[0];
-      setPictures([newFile]);
+      // Add new files to existing pictures (allow multiple)
+      const newFiles = Array.from(files);
+      setPictures(prev => [...prev, ...newFiles]);
     }
   };
 
@@ -49,9 +49,9 @@ const AddPicturesWithNotesModal: React.FC<AddPicturesWithNotesModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-lg mx-4">
+      <div className="bg-white rounded-lg p-6 w-full max-w-sm mx-4">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-black">Add Picture with notes</h2>
+          <h2 className="text-lg font-semibold text-black">Add Pictures with notes</h2>
           <button
             onClick={onClose}
             className="p-1 hover:bg-gray-100 rounded"
@@ -61,14 +61,14 @@ const AddPicturesWithNotesModal: React.FC<AddPicturesWithNotesModalProps> = ({
         </div>
         
         <p className="text-sm text-gray-600 mb-4">
-          Add your picture & notes to this annotation.
+          Add your pictures & notes to this annotation.
         </p>
 
         <form onSubmit={handleSubmit}>
           {/* Pictures Section */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Picture
+              Pictures
             </label>
             <div className="flex flex-wrap gap-2 mb-2">
               {pictures.map((picture, index) => (
@@ -81,9 +81,9 @@ const AddPicturesWithNotesModal: React.FC<AddPicturesWithNotesModalProps> = ({
                   <button
                     type="button"
                     onClick={() => removePicture(index)}
-                    className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600"
+                    className="absolute -top-1 -right-1 w-5 h-5 bg-gray-600 text-white rounded-full flex items-center justify-center text-xs hover:bg-gray-700"
                   >
-                    <TrashIcon className="w-3 h-3" />
+                    <XIcon className="w-3 h-3" />
                   </button>
                 </div>
               ))}
@@ -92,13 +92,14 @@ const AddPicturesWithNotesModal: React.FC<AddPicturesWithNotesModalProps> = ({
                 onClick={handleAddPictures}
                 className="w-16 h-16 border-2 border-dashed border-gray-300 rounded flex items-center justify-center hover:border-gray-400 transition-colors"
               >
-                <PlusIcon className="w-6 h-6 text-gray-400" />
+                <PlusIcon className="w-6 h-6 text-blue-500" />
               </button>
             </div>
             <input
               ref={fileInputRef}
               type="file"
               accept="image/*"
+              multiple
               onChange={handleFileChange}
               className="hidden"
             />
@@ -115,8 +116,13 @@ const AddPicturesWithNotesModal: React.FC<AddPicturesWithNotesModalProps> = ({
             />
           </div>
           
-          <div className="flex justify-end">
-            <Button type="submit" variant="primary">
+          <div className="w-full">
+            <Button 
+              type="submit" 
+              variant="primary"
+              size="md"
+              className="w-full"
+            >
               Add
             </Button>
           </div>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@/components/ui/Button';
 import FormInput from '@/components/ui/FormInput';
 import { PDFIcon, SearchIcon, EyeIcon } from '@/components/ui/Icons';
+import AddPicturesWithNotesModal from '@/components/modals/AddPicturesWithNotesModal';
 import { 
   FileTextIcon, 
   PencilIcon, 
@@ -48,6 +49,7 @@ const DocumentViewerHeader: React.FC<DocumentViewerHeaderProps> = ({
   onUndo,
   onRedo,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const renderAnnotationTools = () => {
     if (activeTab !== 'annotate') return null;
 
@@ -86,20 +88,14 @@ const DocumentViewerHeader: React.FC<DocumentViewerHeaderProps> = ({
         >
           <EraserIcon className="w-5 h-5" />
         </button>
-        {/* Fake camera button - only opens file gallery */}
-        <input
-          type="file"
-          accept="image/*"
-          className="w-10 h-10 rounded-full opacity-0 cursor-pointer absolute z-10"
-          title="Upload image"
-          onChange={() => {
-            // Fake upload - do nothing, just open gallery
-            console.log('Fake image upload from header - no annotation created');
-          }}
-        />
-        <div className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 bg-white text-action hover:bg-action/10 hover:shadow-md pointer-events-none">
+        {/* Camera button - opens modal */}
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 bg-white text-action hover:bg-action/10 hover:shadow-md cursor-pointer"
+          title="Add Pictures with Notes"
+        >
           <CameraIcon className="w-5 h-5" />
-        </div>
+        </button>
         <button
           onClick={() => {
             onToolSelect('note');
@@ -212,6 +208,19 @@ const DocumentViewerHeader: React.FC<DocumentViewerHeaderProps> = ({
 
       {/* Annotation Tools Sub-toolbar */}
       {renderAnnotationTools()}
+      
+      {/* Add Pictures with Notes Modal */}
+      <AddPicturesWithNotesModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onAdd={(pictures, note) => {
+          // Handle the uploaded pictures and notes
+          console.log('Pictures uploaded from header:', pictures);
+          console.log('Note added from header:', note);
+          // Close modal after handling
+          setIsModalOpen(false);
+        }}
+      />
     </div>
   );
 };
