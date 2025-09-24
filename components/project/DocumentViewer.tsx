@@ -536,7 +536,7 @@ const DocumentViewer = forwardRef<{ undo: () => void; redo: () => void; addImage
         return (
           <div
             key={annotation.id}
-            className={`absolute ${annotation.type === 'text' || annotation.type === 'image' ? 'pointer-events-auto' : 'pointer-events-none'}`}
+            className={`absolute ${annotation.type === 'text' ? 'pointer-events-auto' : 'pointer-events-none'}`}
             style={{
               left: annotation.x,
               top: annotation.y,
