@@ -1,6 +1,7 @@
 import React, { forwardRef, useState, useRef, useCallback } from 'react';
 import ProjectNotesSection from './ProjectNotesSection';
 import SiteInspectionReportTemplate from './SiteInspectionReportTemplate';
+import { CameraIcon } from 'lucide-react';
 
 type StoredProject = {
   id: string;
@@ -500,6 +501,11 @@ const DocumentViewer = forwardRef<{ undo: () => void; redo: () => void; addImage
 
     const renderAnnotations = () => {
       return annotations.map((annotation) => {
+        // Skip rendering image annotations to prevent uploaded images from showing
+        if (annotation.type === 'image') {
+          return null;
+        }
+        
         if (annotation.type === 'draw' && annotation.pathData) {
           const pathData = annotation.pathData.reduce((path, point, index) => {
             if (index === 0) return `M ${point.x} ${point.y}`;
@@ -762,12 +768,67 @@ const DocumentViewer = forwardRef<{ undo: () => void; redo: () => void; addImage
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
           >
-            <SiteInspectionReportTemplate 
-              project={project} 
-              annotations={reportAnnotations}
-              photos={photos}
-            />
-            <ProjectNotesSection notes={notes} />
+            {/* Show different content based on active tab */}
+            {activeTab === 'view' ? (
+              <>
+                <SiteInspectionReportTemplate 
+                  project={project} 
+                  annotations={reportAnnotations}
+                  photos={photos}
+                />
+                <ProjectNotesSection notes={notes} />
+              </>
+            ) : (
+              /* Show SVG image in annotate mode with camera icons */
+              <div className="flex justify-center items-center w-full h-full min-h-[800px] relative">
+                <img 
+                  src="/annotate-image.svg" 
+                  alt="Annotate Image" 
+                  className="max-w-full max-h-full object-contain"
+                />
+                
+                {/* Camera icons positioned at corners and center */}
+                <button
+                  onClick={onAddImageNote}
+                  className="absolute top-32 left-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-10"
+                  title="Add image and notes"
+                >
+                  <CameraIcon className="w-5 h-5" />
+                </button>
+                
+                <button
+                  onClick={onAddImageNote}
+                  className="absolute top-32 right-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-10"
+                  title="Add image and notes"
+                >
+                  <CameraIcon className="w-5 h-5" />
+                </button>
+                
+                <button
+                  onClick={onAddImageNote}
+                  className="absolute bottom-32 left-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-10"
+                  title="Add image and notes"
+                >
+                  <CameraIcon className="w-5 h-5" />
+                </button>
+                
+                <button
+                  onClick={onAddImageNote}
+                  className="absolute bottom-32 right-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-10"
+                  title="Add image and notes"
+                >
+                  <CameraIcon className="w-5 h-5" />
+                </button>
+                
+                <button
+                  onClick={onAddImageNote}
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-10"
+                  title="Add image and notes"
+                >
+                  <CameraIcon className="w-5 h-5" />
+                </button>
+              </div>
+            )}
 
             {/* Render annotations - only show when not in view mode */}
             {activeTab !== 'view' && renderAnnotations()}
