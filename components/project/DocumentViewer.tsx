@@ -501,10 +501,6 @@ const DocumentViewer = forwardRef<{ undo: () => void; redo: () => void; addImage
 
     const renderAnnotations = () => {
       return annotations.map((annotation) => {
-        // Skip rendering image annotations to prevent uploaded images from showing
-        if (annotation.type === 'image') {
-          return null;
-        }
         
         if (annotation.type === 'draw' && annotation.pathData) {
           const pathData = annotation.pathData.reduce((path, point, index) => {
