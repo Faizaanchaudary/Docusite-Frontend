@@ -232,17 +232,10 @@ const SiteInspectionReportTemplate: React.FC<SiteInspectionReportTemplateProps> 
                 Photo {index + 1} - Annotation {photo.refId}
               </h3>
               <div className="bg-gray-100 h-32 rounded flex items-center justify-center">
-                {photo.url ? (
-                  <img 
-                    src={photo.url} 
-                    alt={photo.description}
-                    className="max-h-full max-w-full object-contain rounded"
-                  />
-                ) : (
-                  <span className="text-gray-500 text-xs text-center">
-                    {photo.description}
-                  </span>
-                )}
+                {/* Completely hide uploaded images - show nothing */}
+                <span className="text-gray-500 text-xs text-center">
+                  {photo.description || 'No description available'}
+                </span>
               </div>
             </div>
           ))}

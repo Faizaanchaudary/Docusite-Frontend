@@ -643,65 +643,8 @@ const DocumentViewer = forwardRef<{ undo: () => void; redo: () => void; addImage
               />
             )}
             {annotation.type === 'image' && (
-              <div className="relative group">
-                <div
-                  className="bg-white border-2 border-blue-400 rounded overflow-hidden cursor-move hover:border-blue-500 hover:shadow-md transition-all duration-200"
-                  style={{
-                    width: annotation.width || 300,
-                    height: annotation.height || 200,
-                    minWidth: 200,
-                    minHeight: 150
-                  }}
-                >
-                  {annotation.images && annotation.images.length > 0 ? (
-                    <>
-                      {/* Single Image Display */}
-                      <div className="relative w-full h-full">
-                        <img
-                          src={annotation.images[0]?.url}
-                          alt="Annotation"
-                          className="w-full h-full object-cover"
-                          onError={(e) => console.log('Image load error:', e)}
-                          onLoad={() => console.log('Image loaded successfully')}
-                        />
-                        
-                        {/* Notes Overlay */}
-                        {annotation.images[0]?.note && (
-                          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-75 text-white text-xs p-2">
-                            {annotation.images[0]?.note}
-                          </div>
-                        )}
-                      </div>
-                    </>
-                  ) : (
-                    // Fallback for old single image format
-                    <>
-                      <img
-                        src={annotation.imageUrl}
-                        alt="Annotation"
-                        className="w-full h-full object-cover"
-                      />
-                      {annotation.content && (
-                        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-75 text-white text-xs p-2">
-                          {annotation.content}
-                        </div>
-                      )}
-                    </>
-                  )}
-                </div>
-                
-                {/* Resize handle - only show on hover */}
-                <div
-                  className="absolute w-3 h-3 bg-blue-500 cursor-se-resize opacity-0 group-hover:opacity-70 hover:opacity-100 transition-opacity duration-200"
-                  style={{
-                    right: -6,
-                    bottom: -6,
-                    borderRadius: '50%'
-                  }}
-                  title="Drag to resize"
-                />
-                
-              </div>
+              // Completely hide image annotations - show nothing after upload
+              null
             )}
           </div>
         );
@@ -784,45 +727,76 @@ const DocumentViewer = forwardRef<{ undo: () => void; redo: () => void; addImage
                 />
                 
                 {/* Camera icons positioned at corners and center */}
-                <button
-                  onClick={onAddImageNote}
-                  className="absolute top-32 left-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-10"
-                  title="Add image and notes"
-                >
+                {/* Fake camera buttons - only open file gallery, no annotations created */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="absolute top-32 left-32 w-10 h-10 opacity-0 cursor-pointer z-10"
+                  title="Upload image"
+                  onChange={() => {
+                    // Fake upload - do nothing, just open gallery
+                    console.log('Fake image upload - no annotation created');
+                  }}
+                />
+                <div className="absolute top-32 left-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 pointer-events-none">
                   <CameraIcon className="w-5 h-5" />
-                </button>
+                </div>
                 
-                <button
-                  onClick={onAddImageNote}
-                  className="absolute top-32 right-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-10"
-                  title="Add image and notes"
-                >
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="absolute top-32 right-32 w-10 h-10 opacity-0 cursor-pointer z-10"
+                  title="Upload image"
+                  onChange={() => {
+                    // Fake upload - do nothing, just open gallery
+                    console.log('Fake image upload - no annotation created');
+                  }}
+                />
+                <div className="absolute top-32 right-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 pointer-events-none">
                   <CameraIcon className="w-5 h-5" />
-                </button>
+                </div>
                 
-                <button
-                  onClick={onAddImageNote}
-                  className="absolute bottom-32 left-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-10"
-                  title="Add image and notes"
-                >
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="absolute bottom-32 left-32 w-10 h-10 opacity-0 cursor-pointer z-10"
+                  title="Upload image"
+                  onChange={() => {
+                    // Fake upload - do nothing, just open gallery
+                    console.log('Fake image upload - no annotation created');
+                  }}
+                />
+                <div className="absolute bottom-32 left-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 pointer-events-none">
                   <CameraIcon className="w-5 h-5" />
-                </button>
+                </div>
                 
-                <button
-                  onClick={onAddImageNote}
-                  className="absolute bottom-32 right-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-10"
-                  title="Add image and notes"
-                >
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="absolute bottom-32 right-32 w-10 h-10 opacity-0 cursor-pointer z-10"
+                  title="Upload image"
+                  onChange={() => {
+                    // Fake upload - do nothing, just open gallery
+                    console.log('Fake image upload - no annotation created');
+                  }}
+                />
+                <div className="absolute bottom-32 right-32 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 pointer-events-none">
                   <CameraIcon className="w-5 h-5" />
-                </button>
+                </div>
                 
-                <button
-                  onClick={onAddImageNote}
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 z-10"
-                  title="Add image and notes"
-                >
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 opacity-0 cursor-pointer z-10"
+                  title="Upload image"
+                  onChange={() => {
+                    // Fake upload - do nothing, just open gallery
+                    console.log('Fake image upload - no annotation created');
+                  }}
+                />
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 pointer-events-none">
                   <CameraIcon className="w-5 h-5" />
-                </button>
+                </div>
               </div>
             )}
 

@@ -86,16 +86,20 @@ const DocumentViewerHeader: React.FC<DocumentViewerHeaderProps> = ({
         >
           <EraserIcon className="w-5 h-5" />
         </button>
-        <button
-          onClick={() => {
-            onToolSelect('image');
-            onAddImageNote();
+        {/* Fake camera button - only opens file gallery */}
+        <input
+          type="file"
+          accept="image/*"
+          className="w-10 h-10 rounded-full opacity-0 cursor-pointer absolute z-10"
+          title="Upload image"
+          onChange={() => {
+            // Fake upload - do nothing, just open gallery
+            console.log('Fake image upload from header - no annotation created');
           }}
-          className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 bg-white text-action hover:bg-action/10 hover:shadow-md"
-          title="Add Image"
-        >
+        />
+        <div className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 bg-white text-action hover:bg-action/10 hover:shadow-md pointer-events-none">
           <CameraIcon className="w-5 h-5" />
-        </button>
+        </div>
         <button
           onClick={() => {
             onToolSelect('note');
