@@ -10,6 +10,7 @@ interface Message {
   timestamp: string;
   avatar?: string;
   isRead?: boolean;
+  senderName?: string;
 }
 
 export default function Messages() {
@@ -19,30 +20,49 @@ export default function Messages() {
     {
       id: '1',
       type: 'date',
-      content: 'Yesterday',
+      content: 'Today',
       timestamp: ''
     },
     {
       id: '2',
       type: 'incoming',
-      content: 'Hello there! Hope you are doing well',
-      timestamp: '12:22 am',
+      content: 'Good morning team! The foundation work is progressing well. We should have the concrete poured by Friday.',
+      timestamp: '9:15 am',
       avatar: '/avatar.png',
-      isRead: true
+      isRead: true,
+      senderName: 'Sarah Johnson'
     },
     {
       id: '3',
       type: 'incoming',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt',
-      timestamp: '12:22 am',
+      content: 'The weather forecast looks good for the next few days, so we should be able to stay on schedule.',
+      timestamp: '9:16 am',
       avatar: '/avatar.png',
-      isRead: true
+      isRead: true,
+      senderName: 'Michael Chen'
     },
     {
       id: '4',
       type: 'outgoing',
-      content: "I'm doing good",
-      timestamp: '12:22 am',
+      content: "That's great news! I'll make sure the concrete delivery is scheduled for Thursday morning.",
+      timestamp: '9:18 am',
+      avatar: '/avatar.png',
+      isRead: true
+    },
+    {
+      id: '5',
+      type: 'incoming',
+      content: 'Perfect! I\'ve also uploaded the latest progress photos to the project folder. The structural engineer will be visiting tomorrow.',
+      timestamp: '9:20 am',
+      avatar: '/avatar.png',
+      isRead: true,
+      senderName: 'Emily Rodriguez'
+    },
+    {
+      id: '6',
+      type: 'outgoing',
+      content: 'Thanks for the update. I\'ll review the photos and prepare the inspection checklist.',
+      timestamp: '9:22 am',
       avatar: '/avatar.png',
       isRead: true
     }
@@ -83,18 +103,35 @@ export default function Messages() {
       
       setMessages(prev => [...prev, newMessage]);
       
-      // Simulate a response from the other person after a short delay
+      // Simulate realistic responses based on project context
       setTimeout(() => {
+        const responses = [
+          "Got it! I'll update the project timeline accordingly.",
+          "Perfect! I've noted that in the project notes.",
+          "Thanks for the update. I'll share this with the rest of the team.",
+          "Excellent! This will help us stay on track with the deadline.",
+          "I'll make sure to follow up on that. Thanks for keeping us informed!",
+          "Great point! I'll add this to our next team meeting agenda.",
+          "Understood. I'll coordinate with the suppliers on this.",
+          "Perfect timing! This aligns with our project milestones."
+        ];
+        
+        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+        
+        const teamMembers = ['Sarah Johnson', 'Michael Chen', 'Emily Rodriguez', 'David Kim', 'Lisa Wang', 'Robert Taylor', 'Jennifer Lee'];
+        const randomMember = teamMembers[Math.floor(Math.random() * teamMembers.length)];
+        
         const responseMessage: Message = {
           id: generateMessageId(),
           type: 'incoming',
-          content: 'Thanks for your message! I\'ll get back to you soon.',
+          content: randomResponse,
           timestamp: getCurrentTimestamp(),
           avatar: '/avatar.png',
-          isRead: true
+          isRead: true,
+          senderName: randomMember
         };
         setMessages(prev => [...prev, responseMessage]);
-      }, 1000);
+      }, 1500);
     }
   };
 

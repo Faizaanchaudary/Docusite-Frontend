@@ -9,6 +9,7 @@ interface Message {
   timestamp: string;
   avatar?: string;
   isRead?: boolean;
+  senderName?: string;
 }
 
 interface MessageBubbleProps {
@@ -31,6 +32,11 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   return (
     <div className={`flex ${isOutgoing ? "justify-end" : "justify-start"}`}>
       <div className={`flex flex-col ${isOutgoing ? "items-end" : "items-start"} max-w-xs lg:max-w-md`}>
+        {/* Sender Name for incoming messages */}
+        {!isOutgoing && message.senderName && (
+          <span className="text-xs text-text-gray mb-1 font-medium">{message.senderName}</span>
+        )}
+        
         {/* Message Bubble */}
         <div
           className={`px-4 py-2 rounded-xl ${
@@ -46,7 +52,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
           <span className="text-xs text-placeholder-gray">
             {message.timestamp}
           </span>
-            <CheckIcon className="w-4 h-4 text-action" />
+            {isOutgoing && <CheckIcon className="w-4 h-4 text-action" />}
           </div>
           <Avatar
             src={message.avatar}

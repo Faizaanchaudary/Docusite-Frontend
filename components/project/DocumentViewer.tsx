@@ -545,7 +545,7 @@ const DocumentViewer = forwardRef<{ undo: () => void; redo: () => void; addImage
             {annotation.type === 'text' && (
               <div className="relative group">
                 <div
-                  className={`bg-white border-2 text-sm cursor-text overflow-hidden transition-all duration-200 flex items-center justify-start ${
+                  className={`bg-transparent border-2 text-sm cursor-text overflow-hidden transition-all duration-200 flex items-center justify-start ${
                     editingAnnotationId === annotation.id 
                       ? 'border-blue-500 shadow-lg' 
                       : 'border-blue-400 hover:border-blue-500 hover:shadow-md'

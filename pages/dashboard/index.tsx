@@ -210,16 +210,18 @@ export default function Dashboard() {
       id: Date.now().toString(), // Simple ID generation
       name: projectData.title,
       location: projectData.location,
-      team: projectData.members.map((member: string) => '/avatar.png'), // Use placeholder avatars
+      team: projectData.members && projectData.members.length > 0 
+        ? projectData.members.map((member: string) => '/avatar.png') 
+        : [], // Handle empty members array
       lastUpdatedTime: 'Just now',
       assignedTo: 'You',
       deadlineDate: projectData.deadline,
       progress: 0,
-      status: 'all',
+      status: 'in-progress',
       clientName: projectData.clientName,
       projectOwner: 'You',
       deadline: projectData.deadline,
-      members: projectData.members.length
+      members: projectData.members ? projectData.members.length : 0
     };
     
     setProjects(prevProjects => [...prevProjects, newProject]);

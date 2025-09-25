@@ -9,70 +9,70 @@ interface ChatSidebarProps {
 }
 
 const ChatSidebar: React.FC<ChatSidebarProps> = ({ selectedChat, onChatSelect, onClose }) => {
-  // Sample chat data
+  // Sample chat data with realistic project group chats
   const chats = [
     {
       id: '1',
-      name: 'Hotel Al-Buraak',
-      avatar: 'H',
-      lastMessage: "How's going?",
-      timestamp: '2 mins ago',
+      name: 'Luxury Resort Development',
+      avatar: 'L',
+      lastMessage: "Sarah: The foundation work is progressing well. We should have the concrete poured by Friday.",
+      timestamp: '5 mins ago',
       isRead: true,
-      hasUnread: true
+      hasUnread: false
     },
     {
       id: '2',
-      name: 'Hotel Al-Buraak',
-      avatar: 'H',
-      lastMessage: "How's going?",
-      timestamp: '2 mins ago',
+      name: 'Office Complex Renovation',
+      avatar: 'O',
+      lastMessage: "Michael: Can we schedule a site visit for next Tuesday?",
+      timestamp: '1 hour ago',
       isRead: true,
       hasUnread: true
     },
     {
       id: '3',
-      name: 'Hotel Al-Buraak',
-      avatar: 'H',
-      lastMessage: "How's going?",
-      timestamp: '2 mins ago',
+      name: 'Shopping Mall Expansion',
+      avatar: 'S',
+      lastMessage: "Emily: The permits have been approved! 🎉",
+      timestamp: '2 hours ago',
       isRead: true,
-      hasUnread: true
+      hasUnread: false
     },
     {
       id: '4',
-      name: 'Hotel Al-Buraak',
-      avatar: 'H',
-      lastMessage: "How's going?",
-      timestamp: '2 mins ago',
+      name: 'Residential Tower',
+      avatar: 'R',
+      lastMessage: "David: I've uploaded the latest blueprints to the project folder.",
+      timestamp: '3 hours ago',
       isRead: true,
-      hasUnread: true
+      hasUnread: false
     },
     {
       id: '5',
-      name: 'Hotel Al-Buraak',
-      avatar: 'H',
-      lastMessage: "How's going?",
-      timestamp: '2 mins ago',
+      name: 'Tech Campus Construction',
+      avatar: 'T',
+      lastMessage: "Lisa: The electrical installation is complete. Ready for inspection.",
+      timestamp: '1 day ago',
       isRead: true,
-      hasUnread: true
+      hasUnread: false
     },
     {
       id: '6',
-      name: 'Hotel Al-Buraak',
+      name: 'Hospital Wing Addition',
       avatar: 'H',
-      lastMessage: "How's going?",
-      timestamp: '2 mins ago',
+      lastMessage: "Robert: We need to discuss the budget allocation for medical equipment.",
+      timestamp: '2 days ago',
       isRead: true,
       hasUnread: true
     },
     {
       id: '7',
-      name: 'Hotel Al-Buraak',
-      avatar: 'H',
-      lastMessage: "How's going?",
-      timestamp: '2 mins ago',
+      name: 'Sports Complex',
+      avatar: 'S',
+      lastMessage: "Jennifer: The landscaping design has been finalized.",
+      timestamp: '3 days ago',
       isRead: true,
-      hasUnread: true
+      hasUnread: false
     }
   ];
 

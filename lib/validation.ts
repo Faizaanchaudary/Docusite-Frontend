@@ -46,8 +46,7 @@ export const createProjectSchema = Yup.object({
   deadline: Yup.string()
     .required('Deadline is required'),
   members: Yup.array()
-    .of(Yup.string())
-    .min(1, 'At least one member must be assigned'),
+    .of(Yup.string()),
   viewAccess: Yup.boolean(),
   editAccess: Yup.boolean()
 });

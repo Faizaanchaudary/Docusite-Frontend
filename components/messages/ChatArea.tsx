@@ -41,7 +41,16 @@ const ChatArea: React.FC<ChatAreaProps> = ({ selectedChat, messages, onSendMessa
               <ArrowLeft className="w-5 h-5 text-gray-600" />
             </button>
           )}
-          <h2 className="text-lg font-bold text-black">Hotel Al Burak</h2>
+          <h2 className="text-lg font-bold text-black">
+            {selectedChat === '1' && 'Luxury Resort Development'}
+            {selectedChat === '2' && 'Office Complex Renovation'}
+            {selectedChat === '3' && 'Shopping Mall Expansion'}
+            {selectedChat === '4' && 'Residential Tower'}
+            {selectedChat === '5' && 'Tech Campus Construction'}
+            {selectedChat === '6' && 'Hospital Wing Addition'}
+            {selectedChat === '7' && 'Sports Complex'}
+            {!selectedChat && 'Select a Project Chat'}
+          </h2>
         </div>
       </div>
       
