@@ -12,7 +12,7 @@ const categories = [
   'STRUCTURAL',
   'MEP',
   'Architectural',
-  'Electrical',
+  'Interior/ Finishes',
   'Others'
 ];
 

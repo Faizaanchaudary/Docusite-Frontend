@@ -40,10 +40,10 @@ const FilesList: React.FC<FilesListProps> = ({ projectId, project }) => {
     },
     {
       id: '2',
-      name: 'Electrical Plan.pdf',
+      name: 'Interior/ Finishes Plan.pdf',
       lastUpdated: '5 mins ago',
       type: 'pdf',
-      category: 'Electrical'
+      category: 'Interior/ Finishes'
     },
     {
       id: '3',
@@ -188,7 +188,7 @@ const FilesList: React.FC<FilesListProps> = ({ projectId, project }) => {
           }, {} as Record<string, File[]>);
 
           // Sort categories
-          const categoryOrder = ['STRUCTURAL', 'MEP', 'Architectural', 'Electrical', 'Others'];
+          const categoryOrder = ['STRUCTURAL', 'MEP', 'Architectural', 'Interior/ Finishes', 'Others'];
           const sortedCategories = categoryOrder.filter(cat => groupedFiles[cat]);
 
           return sortedCategories.map((category) => (
