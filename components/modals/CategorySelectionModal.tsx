@@ -10,7 +10,7 @@ interface CategorySelectionModalProps {
 
 const categories = [
   'STRUCTURAL',
-  'MVP',
+  'MEP',
   'Architectural',
   'Electrical',
   'Others'
