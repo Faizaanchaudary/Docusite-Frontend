@@ -18,6 +18,7 @@ type AnnotationTool = 'text' | 'shape' | 'image' | 'note' | 'highlight' | 'draw'
 
 interface DocumentViewerHeaderProps {
   projectName: string;
+  selectedFile?: { id: string; name: string; category?: string } | null;
   searchQuery: string;
   onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onExportPdf: () => void;
@@ -35,6 +36,7 @@ interface DocumentViewerHeaderProps {
 
 const DocumentViewerHeader: React.FC<DocumentViewerHeaderProps> = ({
   projectName,
+  selectedFile,
   searchQuery,
   onSearchChange,
   onExportPdf,
@@ -133,13 +135,26 @@ const DocumentViewerHeader: React.FC<DocumentViewerHeaderProps> = ({
     <div className="bg-white border-b border-border-gray rounded-t-xl sticky top-0 z-40">
       {/* Top Row - Document Info and Actions */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between px-4 sm:px-6 py-4 gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-cancelled-color/15 rounded flex items-center justify-center">
-            <PDFIcon className="w-5 h-5 text-white" />
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-cancelled-color/15 rounded flex items-center justify-center">
+              <PDFIcon className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h1 className="text-base sm:text-lg font-semibold text-black truncate max-w-[200px] sm:max-w-none">
+                {selectedFile?.name || `${projectName}.pdf`}
+              </h1>
+            </div>
           </div>
-          <div>
-            <h1 className="text-base sm:text-lg font-semibold text-black truncate max-w-[200px] sm:max-w-none">{projectName}.pdf</h1>
-          </div>
+          {/* Category Heading */}
+          {selectedFile?.category && (
+            <div className="flex items-center gap-2 ml-11">
+              <span className="text-xs text-text-gray">Category:</span>
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-action/10 text-action border border-action/20">
+                {selectedFile.category}
+              </span>
+            </div>
+          )}
         </div>
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="relative">

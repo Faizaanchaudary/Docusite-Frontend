@@ -27,6 +27,7 @@ type Annotation = {
 
 interface SiteInspectionReportTemplateProps {
   project: StoredProject;
+  selectedFile?: { id: string; name: string; category?: string } | null;
   annotations: Annotation[];
   photos: Array<{
     id: string;
@@ -40,6 +41,7 @@ interface SiteInspectionReportTemplateProps {
 
 const SiteInspectionReportTemplate: React.FC<SiteInspectionReportTemplateProps> = ({
   project,
+  selectedFile,
   annotations,
   photos,
   reportType = 'site-inspection',
@@ -82,7 +84,13 @@ const SiteInspectionReportTemplate: React.FC<SiteInspectionReportTemplateProps> 
         <div className="text-2xl font-bold text-gray-800 mb-2">{project.name}</div>
         <div className="text-lg text-gray-600 mb-2">{template.title}</div>
         {template.subtitle && (
-          <div className="text-base text-gray-500 mb-4">{template.subtitle}</div>
+          <div className="text-base text-gray-500 mb-2">{template.subtitle}</div>
+        )}
+        {/* Category Heading */}
+        {selectedFile?.category && (
+          <div className="text-base text-gray-500 mb-4">
+            Category: {selectedFile.category}
+          </div>
         )}
         <div className="text-sm text-gray-500">
           <div>Prepared By: DocuSite - {project.projectOwner || 'Project Team'}</div>

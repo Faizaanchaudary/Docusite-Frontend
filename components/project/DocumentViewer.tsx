@@ -46,6 +46,7 @@ type ReportAnnotation = {
 
 interface DocumentViewerProps {
   project: StoredProject;
+  selectedFile?: { id: string; name: string; category?: string } | null;
   notes: string[];
   selectedTool: 'text' | 'shape' | 'image' | 'note' | 'highlight' | 'draw' | 'eraser' | null;
   activeTab: 'view' | 'annotate';
@@ -56,7 +57,7 @@ interface DocumentViewerProps {
 }
 
 const DocumentViewer = forwardRef<{ undo: () => void; redo: () => void; addImageAnnotation: (imageUrl: string, note: string) => void; addMultipleImages: (imageUrls: string[], note: string) => void; domRef: HTMLDivElement | null }, DocumentViewerProps>(
-  ({ project, notes, selectedTool, activeTab, onAddNote, onAddImageNote, onUndo, onRedo }, ref) => {
+  ({ project, selectedFile, notes, selectedTool, activeTab, onAddNote, onAddImageNote, onUndo, onRedo }, ref) => {
     const [annotations, setAnnotations] = useState<Annotation[]>([]);
     const [isDrawing, setIsDrawing] = useState(false);
     const [drawingPath, setDrawingPath] = useState<{ x: number; y: number }[]>([]);
@@ -714,6 +715,7 @@ const DocumentViewer = forwardRef<{ undo: () => void; redo: () => void; addImage
               <>
                 <SiteInspectionReportTemplate 
                   project={project} 
+                  selectedFile={selectedFile}
                   annotations={reportAnnotations}
                   photos={photos}
                 />

@@ -23,6 +23,7 @@ const ProjectDetailsDashboardPage: React.FC = () => {
   const { projectId } = router.query as { projectId?: string };
 
   const [project, setProject] = useState<StoredProject | null>(null);
+  const [selectedFile, setSelectedFile] = useState<{ id: string; name: string; category?: string } | null>(null);
   const [notes, setNotes] = useState<string[]>([]);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isAddNotesOpen, setIsAddNotesOpen] = useState(false);
@@ -67,6 +68,17 @@ const ProjectDetailsDashboardPage: React.FC = () => {
       if (projectId) {
         setProject({ id: projectId, name: `Project ${projectId}`, status: 'in-progress', location: 'Not specified' });
       }
+    }
+
+    // Load selected file information
+    try {
+      const fileRaw = typeof window !== 'undefined' ? sessionStorage.getItem('selectedFile') : null;
+      if (fileRaw) {
+        const fileParsed = JSON.parse(fileRaw) as { id: string; name: string; category?: string };
+        setSelectedFile(fileParsed);
+      }
+    } catch (error) {
+      console.error('Error loading selected file:', error);
     }
   }, [projectId]);
 
@@ -295,6 +307,7 @@ const ProjectDetailsDashboardPage: React.FC = () => {
     <div className="min-h-screen bg-gray-100 p-6">
       <DocumentViewerHeader
         projectName={project.name}
+        selectedFile={selectedFile}
         searchQuery={searchQuery}
         onSearchChange={handleSearchChange}
         onExportPdf={handleExportPdf}
@@ -313,6 +326,7 @@ const ProjectDetailsDashboardPage: React.FC = () => {
       <DocumentViewer
         ref={exportRef}
         project={project}
+        selectedFile={selectedFile}
         notes={notes}
         selectedTool={selectedTool}
         activeTab={activeTab}
